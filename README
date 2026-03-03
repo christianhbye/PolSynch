@@ -1,12 +1,17 @@
 
-"""""
+"""
 
 POLARIZED SYNCHROTRON SIMULATIONS
 
-Marta Spinelli (2018) -University Of the Western Cape
-For more info on the simulations: 10.1093/mnras/sty1457
+This repository is a fork of the original PolSynch code by
+Marta Spinelli (2018) - University of the Western Cape.
+Original paper: https://doi.org/10.1093/mnras/sty1457
+Original authors: Marta Spinelli et al.
 
-"""""
+This fork updates the code to be Python 3 compatible and conforms
+to modern PEP8 style guidelines.
+
+"""
 
 Generate polarized Q,U Stokes full sky maps in K (Kelvin)
 
