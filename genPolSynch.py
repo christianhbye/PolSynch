@@ -1,3 +1,12 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "astropy>=7.2.0",
+#     "healpy>=1.19.0",
+#     "numpy>=2.4.2",
+#     "scipy>=1.17.1",
+# ]
+# ///
 
 """
 GENERATES POLARIZED SYNCHROTRON FOREGROUNDS AT DIFFERENT FREQUENCIES
@@ -115,6 +124,8 @@ if __name__ == '__main__':
 
     print("Apply inverse RM")
 
+    q_maps = np.zeros((len(frequency), npix), dtype=float)
+    u_maps = np.zeros((len(frequency), npix), dtype=float)
     for ii, ff in enumerate(frequency):
         p_map = iRM.P_l2(npix, RM_cube[:, :, 0], RM_cube[:, :, 1], RM, ff)
         print("Computed freq=", ii, ff)
@@ -122,8 +133,8 @@ if __name__ == '__main__':
         map_Q = p_map.real * convert
         map_U = p_map.imag * convert
 
-        fname_Q = outdir + 'map_Q_nside' + str(nside) + '_seed' + str(seed) + '_freq%03d.fits' % (ii)
-        hp.write_map(fname_Q, map_Q)
-        fname_U = outdir + 'map_U_nside' + str(nside) + '_seed' + str(seed) + '_freq%03d.fits' % (ii)
-        hp.write_map(fname_U, map_U)
+        q_maps[ii, :] = map_Q
+        u_maps[ii, :] = map_U
 
+    print("Storing output maps")
+    np.savez(outdir + 'pol_synch_maps.npz', q_maps=q_maps, u_maps=u_maps, frequency=frequency, seed=seed, nside=nside)
